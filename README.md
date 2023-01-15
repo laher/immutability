@@ -10,9 +10,22 @@ Immutable Lists and Maps, using generics and higher order functions.
 [![Go Report Card](https://goreportcard.com/badge/github.com/laher/immutability)](https://goreportcard.com/report/github.com/laher/immutability)
 
 
-# Similar projects
+I wrote this after working a bit on the `benbjohnson/immutable` package (see below). It's a great package with some useful performance optimisations - especially where you're writing over and over.
 
-# benbjohnson
+But, I realised I wanted a simpler library instead.
+
+This library, `immutability`, is more about conveniently exposing collections of data without exposing the backing slice or map (which would be modifialble).
+
+## Status
+
+NOTE: this is just a very early version.
+
+ * TODO `Set`s; better testing.
+
+
+## Similar projects
+
+### benbjohnson/immutable
 
  * See https://github.com/benbjohnson/immutable
  * uses a more sophisticated internal representation
@@ -22,8 +35,7 @@ Immutable Lists and Maps, using generics and higher order functions.
 
 It's a great package with some useful performance optimisations, but I realised I wanted a simpler library instead.
 
-
-## myitcv
+### myitcv
 
 https://pkg.go.dev/myitcv.io/immutable uses code generation. It doesn't use generics yet.
 
