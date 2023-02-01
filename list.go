@@ -1,5 +1,6 @@
 package immutability
 
+// List is an immutable container for a slice
 type List[T any] struct {
 	items []T
 }
@@ -7,7 +8,9 @@ type List[T any] struct {
 // NewList creates a List from the items received
 // We don't want the caller to reach a pointer to the internal slice
 func NewList[T any](ts ...T) *List[T] {
-	return &List[T]{items: ts}
+	items := make([]T, len(ts))
+	copy(items, ts)
+	return &List[T]{items: items}
 }
 
 func (l *List[T]) Len() int {
@@ -28,7 +31,7 @@ func (l *List[T]) Items() []T {
 
 // Filter returns a new List containing only the items matched by f
 func (l *List[T]) Filter(f func(T) bool) *List[T] {
-	n := NewList[T]()
+	n := NewList[T]() // unknown destination size
 	for _, item := range l.items {
 		if f(item) {
 			n.items = append(n.items, item)
@@ -39,7 +42,7 @@ func (l *List[T]) Filter(f func(T) bool) *List[T] {
 
 // Map returns a new List based on the result of the mapper for each element
 func (l *List[T]) Map(mapper func(T, int) T) *List[T] {
-	n := NewList[T]()
+	n := &List[T]{items: make([]T, 0, len(l.items))}
 	for idx, item := range l.items {
 		n.items = append(n.items, mapper(item, idx))
 	}
@@ -48,7 +51,7 @@ func (l *List[T]) Map(mapper func(T, int) T) *List[T] {
 
 // FlatMap returns a new List based on the result of the mapper for each element
 func (l *List[T]) FlatMap(mapper func(T, int) []T) *List[T] {
-	n := NewList[T]()
+	n := NewList[T]() // unknown destination size
 	for idx, item := range l.items {
 		vs := mapper(item, idx)
 		n.items = append(n.items, vs...)

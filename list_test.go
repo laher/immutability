@@ -6,6 +6,19 @@ import (
 	"testing"
 )
 
+func ExampleList() {
+	input := []string{"1", "2", "a", "b", "c"}
+	l1 := NewList(input...)
+	l1.ForEach(func(in string, idx int) {
+		fmt.Printf("%d: %s, ", idx, in)
+	})
+	input[1] = "z" // update to input should not affect l1
+	l1.ForEach(func(in string, idx int) {
+		fmt.Printf("%d: %s, ", idx, in)
+	})
+	// Output: 0: 1, 1: 2, 2: a, 3: b, 4: c, 0: 1, 1: 2, 2: a, 3: b, 4: c,
+}
+
 func TestList(t *testing.T) {
 	input := []string{"1", "2", "a", "b", "c"}
 	l1 := NewList(input...)
